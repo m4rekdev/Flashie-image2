@@ -3,13 +3,22 @@ const MojangAPI = require('mojang-api');
 
 module.exports = {
     async get(username) {
-        try {
-            const request = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
-            const response = await request.json();
+        let data = {};
+        const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`).then(response => response.json()).catch(error => data = { error: true });
+        // const response = await request.json();
+        console.log(response);
 
-            return { name: response.name, imageUrl: `https://minotar.net/helm/${response.name}` };
-        } catch (error) {
-            console.log(error);
+        if (response.error) {
+            data = {
+                error: true
+            };
+        } else {
+            data = {
+                name: response.name,
+                imageUrl: `https://minotar.net/helm/${response.name}`
+            };
         }
+
+        return data;
     }
 }
