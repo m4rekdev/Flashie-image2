@@ -28,7 +28,7 @@ module.exports = {
                 .setName('platform')
                 .setDescription('The platform to get avatar from.')
                 .setRequired(true)
-                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft'], ['instagram', 'instagram']])
+                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft'], ['instagram', 'instagram'], ['twitter', 'twitter']])
         )
         .addStringOption(option =>
             option
