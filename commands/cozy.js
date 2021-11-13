@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment } = require('discord.js');
 const youtube = require('../handlers/youtube');
 const minecraft = require('../handlers/minecraft');
+const instagram = require('../handlers/instagram');
 const Canvas = require('canvas');
 
 function roundImage(context, x, y, width, height, radius) {
@@ -27,7 +28,7 @@ module.exports = {
                 .setName('platform')
                 .setDescription('The platform to get avatar from.')
                 .setRequired(true)
-                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft']])
+                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft'], ['instagram', 'instagram']])
         )
         .addStringOption(option =>
             option
@@ -41,12 +42,6 @@ module.exports = {
         const cozyOverlay = "./assets/overlays/cozy.png";
         let data = {};
 
-        // if (interaction.options.getString('platform') == 'youtube') {
-        //     data = await youtube.get(query);
-        // } else if (interaction.options.getString('platform') == 'minecraft') {
-        //     data = await minecraft.get(query);
-        // }
-
         switch (interaction.options.getString('platform')) {
             case "youtube":
                 data = await youtube.get(query);
@@ -54,6 +49,10 @@ module.exports = {
 
             case "minecraft":
                 data = await minecraft.get(query);
+                break;
+                
+            case "instagram":
+                data = await instagram.get(query);
                 break;
         }
 
