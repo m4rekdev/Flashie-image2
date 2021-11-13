@@ -41,13 +41,21 @@ module.exports = {
         const cozyOverlay = "./assets/overlays/cozy.png";
         let data = {};
 
-        if (interaction.options.getString('platform') == 'youtube') {
-            data = await youtube.get(query);
-        } else if (interaction.options.getString('platform') == 'minecraft') {
-            data = await minecraft.get(query);
-        }
+        // if (interaction.options.getString('platform') == 'youtube') {
+        //     data = await youtube.get(query);
+        // } else if (interaction.options.getString('platform') == 'minecraft') {
+        //     data = await minecraft.get(query);
+        // }
 
-        console.log(data);
+        switch (interaction.options.getString('platform')) {
+            case "youtube":
+                data = await youtube.get(query);
+                break;
+
+            case "minecraft":
+                data = await minecraft.get(query);
+                break;
+        }
 
         if (data.error) {
             return interaction.editReply({ content: `User not found` });
