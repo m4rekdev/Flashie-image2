@@ -3,7 +3,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 module.exports = {
     async get(username) {
         let data = {};
-        const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`).then(response => response.json()).catch(error => data = { error: true });
+        const response = await fetch(`https://www.instagram.com/${username}/?__a=1`).then(response => response.json()).catch(error => data = { error: true });
 
         if (response.error) {
             data = {
@@ -11,8 +11,8 @@ module.exports = {
             };
         } else {
             data = {
-                name: response.name,
-                imageUrl: `https://minotar.net/helm/${response.name}`
+                name: response.graphql.user.full_name,
+                imageUrl: response.graphql.user.profile_pic_url_hd
             };
         }
 
