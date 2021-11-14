@@ -11,7 +11,8 @@ module.exports = {
     name: 'ready',
     once: true,
     execute(client) {
-        instagramApi.authenticate(ig_username, ig_password);
+        console.log("disablnuty login na instagram v ready.js:15")
+        // instagramApi.authenticate(ig_username, ig_password);
         console.log(`${client.user.tag} is now online!`);
     },
 };

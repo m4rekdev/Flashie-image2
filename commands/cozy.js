@@ -114,7 +114,6 @@ module.exports = {
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
 
         const attachment = new MessageAttachment(canvas.toBuffer(), 'cozy.png');
-
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Cozy')
@@ -122,8 +121,10 @@ module.exports = {
             .setDescription('See your generated image! 🥰')
             .addField('Platform', titleCase(interaction.options.getSubcommand()), true)
             .addField('Account Name', data.name)
+            .setImage('attachment://cozy.png')
             .setTimestamp()
             .setFooter('get flashie premium 69% off');
+
         interaction.editReply({ embeds: [embed], files: [attachment] });
     },
 };
