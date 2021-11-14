@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
+const Canvas = require('canvas');
+
 const youtube = require('../handlers/youtube');
 const minecraft = require('../handlers/minecraft');
 const instagram = require('../handlers/instagram');
 const twitter = require('../handlers/twitter');
-const Canvas = require('canvas');
 
 function roundImage(context, x, y, width, height, radius) {
     context.beginPath();
@@ -115,15 +116,15 @@ module.exports = {
 
         const attachment = new MessageAttachment(canvas.toBuffer(), 'cozy.png');
         const embed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Cozy')
-            .setAuthor('Flashie')
+            .setColor('#d37d63')
+            .setAuthor(interaction.member.user.username, interaction.member.user.avatarURL())
+            .setTitle('Flashie')
             .setDescription('See your generated image! 🥰')
             .addField('Platform', titleCase(interaction.options.getSubcommand()), true)
-            .addField('Account Name', data.name)
+            .addField('Account Name', data.name, true)
             .setImage('attachment://cozy.png')
-            .setTimestamp()
-            .setFooter('get flashie premium 69% off');
+            // .setTimestamp()
+            .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.client.user.displayAvatarURL());
 
         interaction.editReply({ embeds: [embed], files: [attachment] });
     },

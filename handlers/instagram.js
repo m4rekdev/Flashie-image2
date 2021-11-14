@@ -6,16 +6,12 @@ module.exports = {
         let data = {};
         const response = await instagramApi.getUserData(username).catch(error => data = { error: true });
 
-
-        if (!response || response.error)
-            data = {
-                error: true
-            };
-        else
+        if (!response.error)
             data = {
                 name: response.getFullName(),
                 imageUrl: response.getHdProfilePicture()
             };
+            
 
         return data;
     }
