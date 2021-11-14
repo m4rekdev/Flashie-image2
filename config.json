@@ -1,9 +1,11 @@
 {
     "token": "OTA2ODI4Njk3ODYzMDYxNTE1.YYeUCQ.B82sgRqOa_w_63GUZg5BPkaRPzc",
     "clientId": "906828697863061515",
-    "ig_username": "realshiddenly",
-    "ig_password": "CsCzeXor",
+    "instagram_username": "realshiddenly",
+    "instagram_password": "CsCzeXor",
     "twitter_key": "c692eifd0sJOpioflMlrFrQAC",
     "twitter_secret": "1mSr1Bmdg8JkoTq4zkNx52rtGacIdTckQjw4tK4dPVpAMdR3LC",
-    "twitter_token": "AAAAAAAAAAAAAAAAAAAAAPsbVwEAAAAALq%2Buec3rsrNcppK96IuR8WjCsBw%3DFbDsBmreI4FRAEswJt21sM4Vb2cFNjXbcpkKzJhHgXBgtnEI9e"
+    "twitter_token": "AAAAAAAAAAAAAAAAAAAAAPsbVwEAAAAALq%2Buec3rsrNcppK96IuR8WjCsBw%3DFbDsBmreI4FRAEswJt21sM4Vb2cFNjXbcpkKzJhHgXBgtnEI9e",
+    "tiktok_username": "",
+    "tiktok_password": ""
 }

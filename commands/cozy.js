@@ -1,11 +1,13 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageAttachment, MessageEmbed, DiscordAPIError } = require('discord.js');
 const Canvas = require('canvas');
 
 const youtube = require('../handlers/youtube');
 const minecraft = require('../handlers/minecraft');
 const instagram = require('../handlers/instagram');
 const twitter = require('../handlers/twitter');
+const tiktok = require('../handlers/tiktok');
+const discord = require('../handlers/discord');
 
 function roundImage(context, x, y, width, height, radius) {
     context.beginPath();
@@ -76,6 +78,26 @@ module.exports = {
                         .setDescription('The value to search for.')
                         .setRequired(true)
                 )
+        ).addSubcommand(subcommand =>
+            subcommand
+                .setName('tiktok')
+                .setDescription('idkk')
+                .addStringOption(option => 
+                    option
+                        .setName('search')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
+        ).addSubcommand(subcommand =>
+            subcommand
+                .setName('discord')
+                .setDescription('idkk')
+                .addUserOption(option => 
+                    option
+                        .setName('member')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
         ),
     async execute(interaction) {
         await interaction.deferReply();
@@ -97,11 +119,17 @@ module.exports = {
             case "twitter":
                 data = await twitter.get(interaction.options.getString('search'));
                 break;
+
+            case "tiktok":
+                data = await tiktok.get(interaction.options.getString('search'));
+                break;
+
+            case "discord":
+                data = await discord.get(interaction.options.getUser('member'));
+                break;
         }
 
-        if (data.error) {
-            return interaction.editReply({ content: `User not found` });
-        }
+        if (data.error) return interaction.editReply({ content: `User not found` });
 
         const canvas = Canvas.createCanvas(738, 635);
         const context = canvas.getContext('2d');
@@ -117,7 +145,7 @@ module.exports = {
         const attachment = new MessageAttachment(canvas.toBuffer(), 'cozy.png');
         const embed = new MessageEmbed()
             .setColor('#d37d63')
-            .setAuthor(interaction.member.user.username, interaction.member.user.avatarURL())
+            .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
             .setTitle('Flashie')
             .setDescription('See your generated image! 🥰')
             .addField('Platform', titleCase(interaction.options.getSubcommand()), true)

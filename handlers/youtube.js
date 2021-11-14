@@ -16,14 +16,12 @@ module.exports = {
             part: "snippet",
             q: query,
         })
-
-        console.log(response.data.items);
-
+        
         if (response.data.items.length == 0)
             data = {
                 error: true
             };
-        else 
+        else
             data = {
                 imageUrl: response.data.items[0].snippet.thumbnails.high.url,
                 name: response.data.items[0].snippet.title
