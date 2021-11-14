@@ -23,43 +23,12 @@ function roundImage(context, x, y, width, height, radius) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cozy')
-        .setDescription('idk')
-        .addStringOption(option =>
-            option
-                .setName('platform')
-                .setDescription('The platform to get avatar from.')
-                .setRequired(true)
-                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft'], ['instagram', 'instagram'], ['twitter', 'twitter']])
-        )
-        .addStringOption(option =>
-            option
-                .setName('search')
-                .setDescription('The value to search for.')
-                .setRequired(true)
-        ),
+        .setDescription('Turns your profile picture to a cozy'),
     async execute(interaction) {
         await interaction.deferReply();
-        const query = interaction.options.getString('search');
         const cozyOverlay = "./assets/overlays/cozy.png";
-        let data = {};
 
-        switch (interaction.options.getString('platform')) {
-            case "youtube":
-                data = await youtube.get(query);
-                break;
-
-            case "minecraft":
-                data = await minecraft.get(query);
-                break;
-                
-            case "instagram":
-                data = await instagram.get(query);
-                break;
-
-            case "twitter":
-                data = await twitter.get(query);
-                break;
-        }
+        
 
         if (data.error) {
             return interaction.editReply({ content: `User not found` });
