@@ -82,19 +82,19 @@ module.exports = {
 
         switch (interaction.options.getSubcommand()) {
             case "youtube":
-                data = await youtube.get(query);
+                data = await youtube.get(interaction.options.getString('search'));
                 break;
 
             case "minecraft":
-                data = await minecraft.get(query);
+                data = await minecraft.get(interaction.options.getString('search'));
                 break;
                 
             case "instagram":
-                data = await instagram.get(query);
+                data = await instagram.get(interaction.options.getString('search'));
                 break;
 
             case "twitter":
-                data = await twitter.get(query);
+                data = await twitter.get(interaction.options.getString('search'));
                 break;
         }
 
@@ -107,11 +107,14 @@ module.exports = {
         const overlay = await Canvas.loadImage(cozyOverlay);
         const avatar = await Canvas.loadImage(data.imageUrl);
         context.save();
-        roundImage(context, 290, 75, 280, 315, 150);
+        roundImage(context, 309, 72, 252, 315, 150);
         context.clip();
-        context.drawImage(avatar, 290, 75, 280, 315);
+        context.drawImage(avatar, 309, 72, 252, 315);
         context.restore();
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
+
+        const attachment = new MessageAttachment(canvas.toBuffer(), 'cozy.png');
+
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Cozy')
@@ -121,6 +124,6 @@ module.exports = {
             .addField('Account Name', data.name)
             .setTimestamp()
             .setFooter('get flashie premium 69% off');
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [attachment] });
     },
 };
