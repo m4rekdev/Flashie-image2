@@ -3,6 +3,7 @@ const { MessageAttachment } = require('discord.js');
 const youtube = require('../handlers/youtube');
 const minecraft = require('../handlers/minecraft');
 const instagram = require('../handlers/instagram');
+const twitter = require('../handlers/twitter');
 const Canvas = require('canvas');
 
 function roundImage(context, x, y, width, height, radius) {
@@ -53,6 +54,10 @@ module.exports = {
                 
             case "instagram":
                 data = await instagram.get(query);
+                break;
+
+            case "twitter":
+                data = await twitter.get(query);
                 break;
         }
 

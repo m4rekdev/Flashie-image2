@@ -6,6 +6,7 @@ module.exports = {
         let data = {};
         const response = await instagramApi.getUserData(username).catch(error => data = { error: true });
 
+
         if (!response || response.error)
             data = {
                 error: true

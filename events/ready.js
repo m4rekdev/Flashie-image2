@@ -1,5 +1,11 @@
 const instagramApi = require('user-instagram');
-const { ig_username, ig_password } = require('../config.json');
+const twitterApi = require('twitter');
+const { ig_username, ig_password, twitter_key, twitter_secret, twitter_token } = require('../config.json');
+const twitterClient = new twitterApi({
+    consumer_key: twitter_key,
+    consumer_secret: twitter_secret,
+    bearer_token: twitter_token
+});
 
 module.exports = {
     name: 'ready',
@@ -11,3 +17,4 @@ module.exports = {
 };
 
 module.exports.instagramApi = instagramApi;
+module.exports.twitterClient = twitterClient;
