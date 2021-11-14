@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment } = require('discord.js');
+const { MessageAttachment, MessageEmbed } = require('discord.js');
 const youtube = require('../handlers/youtube');
 const minecraft = require('../handlers/minecraft');
 const instagram = require('../handlers/instagram');
@@ -20,22 +20,61 @@ function roundImage(context, x, y, width, height, radius) {
     context.closePath();
 };
 
+function titleCase(str) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+    }
+    return str.join(' ');
+};
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cozy')
         .setDescription('idk')
-        .addStringOption(option =>
-            option
-                .setName('platform')
-                .setDescription('The platform to get avatar from.')
-                .setRequired(true)
-                .addChoices([['youtube', 'youtube'], ['minecraft', 'minecraft'], ['instagram', 'instagram'], ['twitter', 'twitter']])
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('youtube')
+                .setDescription('idkk')
+                .addStringOption(option => 
+                    option
+                        .setName('search')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
         )
-        .addStringOption(option =>
-            option
-                .setName('search')
-                .setDescription('The value to search for.')
-                .setRequired(true)
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('instagram')
+                .setDescription('idkk')
+                .addStringOption(option => 
+                    option
+                        .setName('search')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('minecraft')
+                .setDescription('idkk')
+                .addStringOption(option => 
+                    option
+                        .setName('search')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('twitter')
+                .setDescription('idkk')
+                .addStringOption(option => 
+                    option
+                        .setName('search')
+                        .setDescription('The value to search for.')
+                        .setRequired(true)
+                )
         ),
     async execute(interaction) {
         await interaction.deferReply();
@@ -43,7 +82,7 @@ module.exports = {
         const cozyOverlay = "./assets/overlays/cozy.png";
         let data = {};
 
-        switch (interaction.options.getString('platform')) {
+        switch (interaction.options.getSubcommand()) {
             case "youtube":
                 data = await youtube.get(query);
                 break;
@@ -75,7 +114,15 @@ module.exports = {
         context.drawImage(avatar, 290, 75, 280, 315);
         context.restore();
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
-        const attachment = new MessageAttachment(canvas.toBuffer(), 'image.png');
-        interaction.editReply({ content: `${data.name} je L`, files: [attachment] });
+        const embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Cozy')
+            .setAuthor('Flashie')
+            .setDescription('See your generated image! 🥰')
+            .addField('Platform', titleCase(interaction.options.getSubcommand()), true)
+            .addField('Account Name', data.name)
+            .setTimestamp()
+            .setFooter('get flashie premium 69% off');
+        interaction.editReply({ embeds: [embed] });
     },
 };

@@ -9,7 +9,7 @@ module.exports = {
         if (!response[0].name || !response[0].profile_image_url_https) return { error: true };
 
         const name = response[0].name;
-        const imageUrl = response[0].profile_image_url_https;
+        const imageUrl = response[0].profile_image_url_https.replace('normal.jpg', '400x400.jpg');
 
         data = {
             name,
