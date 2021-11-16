@@ -129,7 +129,15 @@ module.exports = {
                 break;
         }
 
-        if (data.error) return interaction.editReply({ content: `User not found` });
+        const error = new MessageEmbed()
+            .setColor('#ff3d3d')
+            .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
+            .setTitle('Error')
+            .setDescription('**__There was an error, sorry!__**\n*This can be caused by you entering the wrong username or a problem on our side.*')
+            .addField('Platform', titleCase(interaction.options.getSubcommand()), true)
+            .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.client.user.displayAvatarURL());
+
+        if (data.error) return interaction.editReply({ embeds: [error] });
 
         const canvas = Canvas.createCanvas(738, 635);
         const context = canvas.getContext('2d');
@@ -146,12 +154,11 @@ module.exports = {
         const embed = new MessageEmbed()
             .setColor('#d37d63')
             .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
-            .setTitle('Flashie')
+            .setTitle('Cozy')
             .setDescription('See your generated image! 🥰')
             .addField('Platform', titleCase(interaction.options.getSubcommand()), true)
             .addField('Account Name', data.name, true)
             .setImage('attachment://cozy.png')
-            // .setTimestamp()
             .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.client.user.displayAvatarURL());
 
         interaction.editReply({ embeds: [embed], files: [attachment] });

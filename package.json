@@ -1,29 +1,23 @@
 {
-  "name": "bot",
-  "version": "1.0.0",
+  "name": "flashie",
+  "version": "1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "LosingEnergy & Pavlyi",
   "license": "ISC",
   "dependencies": {
-    "@androz2091/insta.js": "^1.6.1",
     "@discordjs/builders": "^0.6.0",
-    "@discordjs/opus": "^0.5.3",
     "@discordjs/rest": "^0.1.0-canary.0",
     "canvas": "^2.8.0",
-    "cheerio": "^1.0.0-rc.10",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.1.0",
     "googleapis": "^89.0.0",
-    "jimp": "^0.16.1",
-    "mojang-api": "^0.0.2",
     "node-fetch": "^3.1.0",
-    "tiktok-app-api": "^1.4.1",
-    "tweetnacl": "^1.0.3",
+    "tiktok-scraper": "^1.4.36",
     "twitter": "^1.7.1",
     "user-instagram": "^3.0.0"
   }
