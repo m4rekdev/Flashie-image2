@@ -1,4 +1,4 @@
-const { instagramApi } = require('../events/ready');
+const { instagramApi } = require('../../events/ready');
 
 module.exports = {
     async get(username) {

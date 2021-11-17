@@ -1,4 +1,4 @@
-const { twitterClient } = require('../events/ready');
+const { twitterClient } = require('../../events/ready');
 
 module.exports = {
     async get(username) {
