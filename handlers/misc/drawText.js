@@ -4,7 +4,6 @@ module.exports = {
         const { fontSize = 20, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'top' } = style;
 
         canvas.beginPath();
-        canvas.registerFont('../../assets/fonts/noto_sans.ttf', { family: 'Noto Sans' });
         canvas.font = fontSize + 'px ' + fontFamily;
         canvas.textAlign = textAlign;
         canvas.textBaseline = textBaseline;

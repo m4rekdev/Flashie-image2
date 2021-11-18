@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
 const Canvas = require('canvas');
+const fs = require('fs');
+const path = require('path');
 
 const data = require('../data/ship.json');
 const drawText = require('../handlers/misc/drawText');
@@ -43,9 +45,10 @@ module.exports = {
 
             data[member.user.id][userToShip.id] = similiarity;
             data[userToShip.id][member.user.id] = similiarity;
+
+            fs.writeFileSync(__dirname + '../data/ship.json', JSON.stringify(data, null, 2));
         }
 
-        context.registerFont('../../assets/fonts/noto_sans.ttf', { family: 'Noto Sans' });
         const canvas = Canvas.createCanvas(1920, 1080);
         const context = canvas.getContext('2d');
         const overlay = await Canvas.loadImage("./assets/images/fun/ship.png");
@@ -55,13 +58,12 @@ module.exports = {
 
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
 
-
         context.drawImage(memberAvatar, 129, 284, 512, 512);
         context.drawImage(shipAvatar, 1279, 284, 512, 512);
-        drawText.write(context, { text: member.user.username, x: 960, y: 506 }, { fontSize: 63, fontFamily: "Noto Sans", textAlign: "center" });
-        drawText.write(context, { text: userToShip.username, x: 960, y: 506 }, { fontSize: 63, fontFamily: "Noto Sans", textAlign: "center" });
+        drawText.write(context, { text: member.user.username, x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
+        drawText.write(context, { text: userToShip.username, x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
 
-        drawText.write(context, { text: similiarity+"%", x: 960, y: 506 }, { fontSize: 63, fontFamily: "Noto Sans", textAlign: "center" });
+        drawText.write(context, { text: similiarity+"%", x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
 
         let embedDescription = "haha uwu";
         const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
