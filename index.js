@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const { Client, Intents, Collection } = require('discord.js');
 
@@ -7,6 +8,8 @@ const { token } = require('./config.json');
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
+if (!fs.existsSync('./data/ship.json')) fs.writeFileSync('./data/ship.json', "{}");
+
 for (const file of eventFiles) {
     const event = require(`./events/${file}`);
     if (event.once) {
@@ -14,6 +17,7 @@ for (const file of eventFiles) {
     } else {
         client.on(event.name, (...args) => event.execute(...args));
     };
+
     console.log(`Loaded event: ${file}`);
 };
 

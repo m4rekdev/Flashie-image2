@@ -9,7 +9,6 @@ const twitter = require('../handlers/platforms/twitter');
 const tiktok = require('../handlers/platforms/tiktok');
 const discord = require('../handlers/platforms/discord');
 const titleCase = require('../handlers/misc/titleCase');
-const error = require('../handlers/misc/error');
 const roundImage = require('../handlers/misc/roundImage');
 
 module.exports = {
@@ -82,7 +81,7 @@ module.exports = {
         ),
     async execute(interaction) {
         await interaction.deferReply();
-        const cozyOverlay = "./assets/overlays/cozy.png";
+        const cozyOverlay = "./assets/images/overlays/cozy.png";
         switch (interaction.options.getSubcommand()) {
             case "youtube":
                 data = await youtube.get(interaction.options.getString('search'));
@@ -109,8 +108,17 @@ module.exports = {
                 break;
         }
 
-        if (data.error)
-            return error.send(interaction);
+        if (data.error) {
+            const error = new MessageEmbed()
+                .setColor('#b5dd92')
+                .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
+                .setTitle('Cozy')
+                .setDescription(`**Sorry, an error occured!**
+                This can be caused by you entering the wrong username or a problem on our side.`)
+                .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.member.user.displayAvatarURL());
+
+            return interaction.editReply({ embeds: [error] });
+        }
 
         const canvas = Canvas.createCanvas(738, 635);
         const context = canvas.getContext('2d');
@@ -123,16 +131,16 @@ module.exports = {
         context.restore();
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
 
-        const attachment = new MessageAttachment(canvas.toBuffer(), 'cozy.png');
+        const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
         const embed = new MessageEmbed()
             .setColor('#d37d63')
             .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
             .setTitle('Cozy')
             .setDescription('See your generated image! 🥰')
             .addField('Platform', await titleCase.make(interaction.options.getSubcommand()), true)
-            .addField('Account Name', data.name, true)
-            .setImage('attachment://cozy.png')
-            .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.client.user.displayAvatarURL());
+            .addField('Target', data.name, true)
+            .setImage('attachment://result.png')
+            .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.member.user.displayAvatarURL());
 
         interaction.editReply({ embeds: [embed], files: [attachment] });
     },
