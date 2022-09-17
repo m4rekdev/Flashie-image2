@@ -26,11 +26,11 @@ module.exports = {
 
         if (member.user.id == userToShip.id) {
             const error = new MessageEmbed()
-                .setColor('#b5dd92')
-                .setAuthor(member.user.username, member.user.displayAvatarURL())
+                .setColor('#dd9292')
+                .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
                 .setTitle('Ship')
                 .setDescription(`You can't ship yourself, silly.`)
-                .setFooter(embedFooterDescription, interaction.client.user.displayAvatarURL());
+                .setFooter({ text: embedFooterDescription });
 
             return interaction.editReply({ embeds: [error] });
         }
@@ -67,14 +67,16 @@ module.exports = {
 
         const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
         const embed = new MessageEmbed()
-            .setColor('#d37d63')
-            .setAuthor(member.user.username, member.user.displayAvatarURL())
+            .setColor('#b5dd92')
+            .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
             .setTitle('Ship')
             .setDescription("See your generated image! 🥰")
-            .addField('Member', member.user.username, true)
-            .addField('Target', userToShip.username, true)
+            .addFields(
+                { name: 'Member', value: member.user.username, inline: true },
+                { name: 'Target', value: userToShip.username, inline: true },
+            )
             .setImage('attachment://result.png')
-            .setFooter(`Ran by ${member.user.tag}`, member.user.displayAvatarURL());
+            .setFooter({ text: embedFooterDescription });
 
         interaction.editReply({ embeds: [embed], files: [attachment] });
     },

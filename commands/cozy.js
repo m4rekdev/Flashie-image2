@@ -110,12 +110,12 @@ module.exports = {
 
         if (data.error) {
             const error = new MessageEmbed()
-                .setColor('#b5dd92')
-                .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
+                .setColor('#dd9292')
+                .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
                 .setTitle('Cozy')
                 .setDescription(`**Sorry, an error occured!**
                 This can be caused by you entering the wrong username or a problem on our side.`)
-                .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.member.user.displayAvatarURL());
+                .setFooter({ text: embedFooterDescription });
 
             return interaction.editReply({ embeds: [error] });
         }
@@ -133,14 +133,16 @@ module.exports = {
 
         const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
         const embed = new MessageEmbed()
-            .setColor('#d37d63')
-            .setAuthor(interaction.member.user.username, interaction.member.user.displayAvatarURL())
+            .setColor('#b5dd92')
+            .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
             .setTitle('Cozy')
             .setDescription('See your generated image! 🥰')
-            .addField('Platform', await titleCase.make(interaction.options.getSubcommand()), true)
-            .addField('Target', data.name, true)
+            .addFields(
+                { name: 'Platform', value: await titleCase.make(interaction.options.getSubcommand()), inline: true },
+                { name: 'Target', value: data.name, inline: true },
+            )
             .setImage('attachment://result.png')
-            .setFooter(`Ran by ${interaction.member.user.tag}`, interaction.member.user.displayAvatarURL());
+            .setFooter({ text: embedFooterDescription });
 
         interaction.editReply({ embeds: [embed], files: [attachment] });
     },
