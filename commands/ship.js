@@ -46,7 +46,7 @@ module.exports = {
             data[member.user.id][userToShip.id] = similiarity;
             data[userToShip.id][member.user.id] = similiarity;
 
-            fs.writeFileSync(__dirname + '../data/ship.json', JSON.stringify(data, null, 2));
+            fs.writeFileSync(__dirname + '/../data/ship.json', JSON.stringify(data, null, 2));
         }
 
         const canvas = Canvas.createCanvas(1920, 1080);
@@ -60,18 +60,19 @@ module.exports = {
 
         context.drawImage(memberAvatar, 129, 284, 512, 512);
         context.drawImage(shipAvatar, 1279, 284, 512, 512);
-        drawText.write(context, { text: member.user.username, x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
-        drawText.write(context, { text: userToShip.username, x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
+        drawText.write(context, { text: member.user.username, x: 340, y: 204 }, { fontSize: 63, textAlign: "center" });
+        drawText.write(context, { text: userToShip.username, x: 1400, y: 804 }, { fontSize: 63, textAlign: "center" });
 
         drawText.write(context, { text: similiarity+"%", x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
 
-        let embedDescription = "haha uwu";
         const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
         const embed = new MessageEmbed()
             .setColor('#d37d63')
             .setAuthor(member.user.username, member.user.displayAvatarURL())
             .setTitle('Ship')
-            .setDescription(embedDescription)
+            .setDescription("See your generated image! 🥰")
+            .addField('Member', member.user.username, true)
+            .addField('Target', userToShip.username, true)
             .setImage('attachment://result.png')
             .setFooter(`Ran by ${member.user.tag}`, member.user.displayAvatarURL());
 

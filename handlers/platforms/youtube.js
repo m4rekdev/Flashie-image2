@@ -1,10 +1,10 @@
 const { google } = require("googleapis");
 const { toolresults } = require("googleapis/build/src/apis/toolresults");
-const apiKey = "AIzaSyCN-i6oapY8uI0VAKacHG1VIAvWD6KAND0";
+const { youtube_apikey } = require('../../config.json');
 const apiUrl = "https://www.googleapis.n/youtube/v3";
 const youtube = google.youtube({
     version: "v3",
-    auth: apiKey,
+    auth: youtube_apikey,
 });
 
 module.exports = {
