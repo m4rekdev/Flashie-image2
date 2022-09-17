@@ -65,7 +65,7 @@ module.exports = {
 
         drawText.write(context, { text: similiarity+"%", x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
 
-        const attachment = new AttachmentBuilder(canvas.toBuffer(), 'result.png');
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'result.png' });
         const embed = new EmbedBuilder()
             .setColor('#b5dd92')
             .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })

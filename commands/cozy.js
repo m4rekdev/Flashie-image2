@@ -10,6 +10,7 @@ const tiktok = require('../handlers/platforms/tiktok');
 const discord = require('../handlers/platforms/discord');
 const titleCase = require('../handlers/misc/titleCase');
 const roundImage = require('../handlers/misc/roundImage');
+const { embedFooterDescription } = require('../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -131,7 +132,7 @@ module.exports = {
         context.restore();
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
 
-        const attachment = new AttachmentBuilder(canvas.toBuffer(), 'result.png');
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'result.png' });
         const embed = new EmbedBuilder()
             .setColor('#b5dd92')
             .setAuthor({ name: interaction.member.user.tag, iconURL: interaction.member.user.displayAvatarURL() })
