@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const Canvas = require('canvas');
 const fs = require('fs');
 const path = require('path');
@@ -25,7 +25,7 @@ module.exports = {
         const userToShip = interaction.options.getUser('member');
 
         if (member.user.id == userToShip.id) {
-            const error = new MessageEmbed()
+            const error = new EmbedBuilder()
                 .setColor('#dd9292')
                 .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
                 .setTitle('Ship')
@@ -65,8 +65,8 @@ module.exports = {
 
         drawText.write(context, { text: similiarity+"%", x: 960, y: 506 }, { fontSize: 63, textAlign: "center" });
 
-        const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
-        const embed = new MessageEmbed()
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), 'result.png');
+        const embed = new EmbedBuilder()
             .setColor('#b5dd92')
             .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
             .setTitle('Ship')

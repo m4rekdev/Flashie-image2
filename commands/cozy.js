@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const Canvas = require('canvas');
 
 const youtube = require('../handlers/platforms/youtube');
@@ -109,9 +109,9 @@ module.exports = {
         }
 
         if (data.error) {
-            const error = new MessageEmbed()
+            const error = new EmbedBuilder()
                 .setColor('#dd9292')
-                .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
+                .setAuthor({ name: interaction.member.user.tag, iconURL: interaction.member.user.displayAvatarURL() })
                 .setTitle('Cozy')
                 .setDescription(`**Sorry, an error occured!**
                 This can be caused by you entering the wrong username or a problem on our side.`)
@@ -131,10 +131,10 @@ module.exports = {
         context.restore();
         context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
 
-        const attachment = new MessageAttachment(canvas.toBuffer(), 'result.png');
-        const embed = new MessageEmbed()
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), 'result.png');
+        const embed = new EmbedBuilder()
             .setColor('#b5dd92')
-            .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
+            .setAuthor({ name: interaction.member.user.tag, iconURL: interaction.member.user.displayAvatarURL() })
             .setTitle('Cozy')
             .setDescription('See your generated image! 🥰')
             .addFields(
