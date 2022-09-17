@@ -25,7 +25,7 @@ module.exports = {
     discordClientId: `974307001683312680`,
 
     discordToken: `OTc0MzA3MDAxNjgzMzEyNjgw.GweGkT.HvUp6j2ueFLOZRVJZ3JiInF86shJRHU0OVyeTA`,
-    topggToken: ``,
+    topggToken: `token`,
     twitter_token: `AAAAAAAAAAAAAAAAAAAAAPsbVwEAAAAALq%2Buec3rsrNcppK96IuR8WjCsBw%3DFbDsBmreI4FRAEswJt21sM4Vb2cFNjXbcpkKzJhHgXBgtnEI9e`,
 
     instagram_username: `realshiddenly`,

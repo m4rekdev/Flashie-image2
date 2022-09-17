@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, User, Message, MessageAttachment } = require(`discord.js`);
+const { EmbedBuilder, Client, User, Message, AttachmentBuilder } = require(`discord.js`);
 const { ERROR_TITLE, ERROR_DESCRIPTION } = require(`../assets/messages.js`);
 const { log } = require(`./logger`);
 
@@ -9,13 +9,13 @@ const { log } = require(`./logger`);
  * @param {string} action 
  * @param {string} actionName
  * @param {boolean} reportError 
- * @returns {Promise<MessageEmbed>} Returns the error embed
+ * @returns {Promise<EmbedBuilder>} Returns the error embed
  */
 function createEmbed(client, executor, error, action, actionName, reportError = true) {
     return new Promise(async (resolve, reject) => {
         const id = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     
-        const errorEmbed = new MessageEmbed()
+        const errorEmbed = new EmbedBuilder()
             .setColor(client.accentColor)
             .setURL(`${client.repositoryUrl}/issues/new?template=bug_report.md`)
             .setTitle(ERROR_TITLE.replaceAll(`{id}`, id))
@@ -39,22 +39,24 @@ function createEmbed(client, executor, error, action, actionName, reportError = 
  */
 function report(client, executor, error, id, action, actionName) {
     return new Promise(async (resolve, reject) => {
-        const reportEmbed = new MessageEmbed()
+        const reportEmbed = new EmbedBuilder()
             .setColor(client.accentColor)
             .setAuthor({
                 name: executor.tag,
                 iconURL: executor.displayAvatarURL()
             })
             .setTitle(`Error #${id}`)
-            .addField(`Action`, `\`${action}\``, true)
-            .addField(`Name`, `\`${actionName}\``, true)
-            .addField(`Executor`, `**${executor.tag}** \`${executor.id}\``)
+            .addFields([
+                { name: `Action`, value: `\`${action}\``, inline: true},
+                { name: `Name`, value: `\`${actionName}\``, inline: true },
+                { name: `Executor`, value: `**${executor.tag}** \`${executor.id}\`` }
+            ])
             .setTimestamp()
     
         const server = await client.guilds.fetch(client.supportServerId);
         const channel = await server.channels.fetch(client.supportServerChannels.botErrors);
     
-        const errorFile = new MessageAttachment(Buffer.from(error.stack), `stack.txt`);
+        const errorFile = new AttachmentBuilder(Buffer.from(error.stack), `stack.txt`);
         resolve(channel.send({ embeds: [reportEmbed], files: [errorFile] }));
     })
 };

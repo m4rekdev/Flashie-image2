@@ -1,6 +1,6 @@
 const { AutocompleteInteraction, CommandInteraction, Message, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require(`discord.js`);
 const { STATS } = require(`../../assets/messages.js`);
-const formatDuration = require('../handlers/misc/formatDuration');
+const formatDuration = require('../../handlers/misc/formatDuration');
 
 module.exports = {
     type: `command`,

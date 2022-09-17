@@ -33,6 +33,7 @@ client.wait = (time) => new Promise(resolve => setTimeout(resolve, time));
 module.exports = client;
 
 //* Create ship data file if it doesn't exist
+const fs = require('fs');
 if (!fs.existsSync('./data/ship.json')) fs.writeFileSync('./data/ship.json', "{}");
 
 //* Handlers
