@@ -1,5 +1,5 @@
 name: discord message
-on: [fork, issue_comment, issues, label, merge_group, milestone, project, project_card, project_column, public, pull_request, pull_request_review, pull_request_review_comment, pull_request_target, push, release, status, gollum]
+on: [push]
 jobs:
   build:
     name: Build
