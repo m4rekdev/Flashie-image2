@@ -1,5 +1,6 @@
 const { AutocompleteInteraction, CommandInteraction, Message, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require(`discord.js`);
 const { STATS } = require(`../../assets/messages.js`);
+const formatDuration = require('../handlers/misc/formatDuration');
 
 module.exports = {
     type: `command`,
@@ -32,17 +33,15 @@ module.exports = {
     },
 
 	async run() {
-        const content = PING;
-
         const embed = new EmbedBuilder()
             .setColor('#d37d63')
             .setAuthor({ name: interaction.member.user.tag, iconURL: interaction.member.user.displayAvatarURL() })
             .setTitle('Stats')
             .setDescription(
                 STATS
-                    .replaceAll(`{0}`, Date.now() - interaction.createdTimestamp)
-                    .replaceAll(`{1}`, Math.round(interaction.client.ws.ping))
-                    .replaceAll(`{2}`, Date.now() - interaction.createdTimestamp)
+                    .replaceAll(`{0}`, Date.now() - interaction.createdTimestamp + `ms`)
+                    .replaceAll(`{1}`, Math.round(interaction.client.ws.ping) + `ms`)
+                    .replaceAll(`{2}`, await formatDuration.format(interaction.client.uptime))
                 )
             .setFooter({ text: embedFooterDescription });
 
